@@ -1,0 +1,37 @@
+jenkins:
+  systemMessage: "Kamesh JCasC"
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
+  maven:
+    installations:
+    - name: "Maven 3"
+      properties:
+      - installSource:
+          installers:
+            - maven:
+                id: "3.5.4"
+unclassified:
+  githubpluginconfig:
+    configs:
+      - name: "MYGitHub"
+        apiUrl: "https://github.com/kameswarab/jenkins-demo.git"
+        manageHooks: true
+jobs:
+  - script: >
+      pipelineJob('pipeline') {
+          definition {
+              cpsScm {
+                  scriptPath 'jenkinsfile'
+                  scm {
+                    git {
+                        remote { url 'https://github.com/kameswarab/jenkins-demo.git' }
+                        branch '*/master'
+                        extensions {}
+                    }
+                  }
+              }
+          }
+      }
